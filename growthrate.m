@@ -28,9 +28,9 @@ gamma = 0.5772156649015328606065120900824;
 K = 0.056;
 ka = k * a;
 kb = k * b;
-term1 = kb * kb / (2 + 0.995 * ka + 0.438 * ka * ka);
-term2 = log((2 + 2.151 * ka) / ka) + K - gamma;
-res = term1 * term2;
+% term1 = kb * kb / (2 + 0.995 * ka + 0.438 * ka * ka);
+% term2 = log((2 + 2.151 * ka) / ka) + K - gamma;
+% res = term1 * term2;
 res = kb * kb / 2 * (log(2/ka) + K - gamma);
 end
 
