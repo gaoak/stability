@@ -1,4 +1,4 @@
-function L = growthrate(a1, G1, a2, G2, b, Re, k)
+function L = growthrate(a1, G1, a2, G2, b, Re, k, model)
 %growthrate Summary of this function goes here
 %   Detailed explanation goes here
 if G1 < abs(G2)
@@ -7,8 +7,8 @@ if G1 < abs(G2)
 end
 eta1 = Fetai(a1, b, Re, k);
 eta2 = Fetai(a2, b, Re, k);
-omega1 = Fomegai(a1, b, k);
-omega2 = Fomegai(a2, b, k);
+omega1 = Fomegai(a1, b, k, model);
+omega2 = Fomegai(a2, b, k, model);
 psi = Fpsi(b, k);
 Chi = FChi(b, k);
 Lambda = G2 / G1;
@@ -23,15 +23,21 @@ ka = k * a;
 res = - (2*pi/Re) * (a/b)^(-2) * (1.54*ka+ka*ka);
 end
 
-function res = Fomegai(a, b, k)
-gamma = 0.5772156649015328606065120900824;
-K = 0.056;
+function res = Fomegai(a, b, k, model)
+gamma = 0.577;
+if model==0 % Rankin vortex, uniform
+    K = 0.25
+elseif model==1 %Lamb-Oseen vortex
+    K = -0.058;
+end
 ka = k * a;
 kb = k * b;
-% term1 = kb * kb / (2 + 0.995 * ka + 0.438 * ka * ka);
-% term2 = log((2 + 2.151 * ka) / ka) + K - gamma;
-% res = term1 * term2;
-res = kb * kb / 2 * (log(2/ka) + K - gamma);
+%leweke 2016
+term1 = kb * kb / (2 + 0.995 * ka + 0.438 * ka * ka);
+term2 = log((2 + 2.151 * ka) / ka) + K - gamma;
+res = term1 * term2;
+% Widnall 1971
+% res = kb * kb / 2 * (log(2/ka) + K - gamma);
 end
 
 function res = Fpsi(b, k)
