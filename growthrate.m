@@ -34,11 +34,14 @@ function res = Fomegai(a, b, k, model)
 %This equation is given by Fabre 2002, PhD thesis
 %unable to find the original thesis and the formula
 %given by Leweke 2016 is wrong; I guess this one 2021
+%A = int r v0^2 dr - ln(r/a) = K
+%C=2/a^2 int rw0^2 dr, =0 if no axial flow
+% ln(a_e / a) = 0.25 - A + C
 gamma = 0.577;
 if model==0 % Rankin vortex, uniform
-    K = 0.25
+    K = 0.25 % Widnall 1975
 elseif model==1 %Lamb-Oseen vortex
-    K = -0.058;
+    K = -0.058; % Widnall 1971, Saffman 1970
 end
 ka = k * a;
 kb = k * b;
